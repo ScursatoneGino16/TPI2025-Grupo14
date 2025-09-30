@@ -1,0 +1,145 @@
+@startuml Diagrama de Clases
+class Cliente 
+{
+    nombre
+    apellido
+    legajo
+    tipoCliente:TipoCliente
+    cuenta:CuentaCorriente
+    crear()
+    mostrar()
+    conocerTipoCliente()
+    cooncerCuentaCorriente()
+}
+
+class TipoCliente
+{
+    nombre
+    descripcion
+    crear()
+    mostrar()
+}
+
+class CuentaCorriente
+{
+    saldo
+    vehiculo:Vehiculo
+    recarga:Recarga
+    crear()
+    mostrar()
+    conocerVehiculo()
+    conocerRecarga()
+    calcularSaldoActual()
+}
+
+class Vehiculo
+{
+    patente
+    modelo
+    marca
+    año
+    color
+    crear()
+    mostrar()
+}
+
+class IngresoEgreso
+{
+    fechaIngreso
+    fechaEgreso
+    plaza:Plaza
+    cliente:Cliente
+    cobro:Cobro
+    crear()
+    mostrar()
+    conocerCliente()    
+    conocerPlaza()
+    conocerCobro()
+    verificarInvitado()
+    verificarIngresoDiario()
+    calcularTiempoEstadia()
+}
+
+class Cobro
+{
+    nroOperacion
+    fechaCobro
+    tarifa:Tarifa
+    metodoPago:MetodoPago
+    crear()
+    mostrar()
+    conocerMetodoPago()
+    conocerTarifa()
+}
+
+class Recarga
+{
+    nroOperacion
+    fechaRecarga
+    monto
+    crear()
+    mostrar()
+}
+
+class MetodoPago
+{
+    nombre
+    descripcion
+    crear()
+    mostrar()
+}
+
+class Estacionamiento
+{
+    plaza:Plaza
+    cantPlazas
+    crear()
+    mostrar()
+    conocerPlaza()
+}
+
+class Plaza
+{
+    numeroPlaza
+    estado:EstadoPlaza
+    fechaPlaza
+    crear()
+    mostrar()
+    conocerEstadoPlaza()
+}
+
+class EstadoPlaza
+{
+    descripcion
+    crear()
+    mostrar()
+}
+
+class Tarifa
+{
+    tarifaBase
+    descuento
+    fechaVigencia
+    crear()
+    mostrar()
+    calcularMontoTotal()
+}
+
+note "Docente\nNo Docente\nAlumno\nExterno\nInvitado" as N1
+note "Efectivo\nCuenta Corriente" as N2
+note "Disponible\nOcupado\nReservado\nEn Mantenimiento" as N3
+
+Cliente -->"1   " TipoCliente
+Cliente -->"0..1 " CuentaCorriente
+CuentaCorriente --> "1..* " Vehiculo
+CuentaCorriente --> "0..* " Recarga
+IngresoEgreso --> "1  " Cliente
+IngresoEgreso --> "0..1   " Cobro
+Cobro --> "1   " MetodoPago
+Cobro --> "1 " Tarifa
+IngresoEgreso -> "1 " Plaza
+Estacionamiento o--> "1..* " Plaza
+Plaza -> "1 " EstadoPlaza
+N1 ..> TipoCliente
+N2 ..> MetodoPago
+N3 ..> EstadoPlaza
