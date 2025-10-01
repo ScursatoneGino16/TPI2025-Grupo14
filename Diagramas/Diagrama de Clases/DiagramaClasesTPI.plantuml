@@ -128,12 +128,13 @@ class Tarifa
 note "Docente\nNo Docente\nAlumno\nExterno\nInvitado" as N1
 note "Efectivo\nCuenta Corriente" as N2
 note "Disponible\nOcupado\nReservado\nEn Mantenimiento" as N3
+note "El descuento se calcula segun el tipo de cliente,\nlos invitados tienen descuento del 100%" as N4
 
 Cliente -->"1   " TipoCliente
 Cliente -->"0..1 " CuentaCorriente
 CuentaCorriente --> "1..* " Vehiculo
 CuentaCorriente --> "0..* " Recarga
-IngresoEgreso --> "1  " Cliente
+IngresoEgreso --> "   1" Cliente
 IngresoEgreso --> "0..1   " Cobro
 Cobro --> "1   " MetodoPago
 Cobro --> "1 " Tarifa
@@ -143,3 +144,4 @@ Plaza -> "1 " EstadoPlaza
 N1 ..> TipoCliente
 N2 ..> MetodoPago
 N3 ..> EstadoPlaza
+N4 .> Tarifa
